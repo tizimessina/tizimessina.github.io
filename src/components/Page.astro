@@ -1,0 +1,373 @@
+---
+import { content, links, ageOn, BIRTH_DATE, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const asset = (p: string) => base + p.replace(/^\//, '');
+const age = ageOn(new Date());
+const year = new Date().getFullYear();
+const a = t.projects.agroapp;
+const h = t.projects.homelab;
+const running = h.services.filter((s) => s.state === 'running').length;
+const langs = [
+  { code: 'en', label: 'EN', name: 'EN · English', href: base, hreflang: 'en' },
+  { code: 'es', label: 'ES', name: 'ES · Español', href: `${base}es/`, hreflang: 'es-AR' },
+] as const;
+---
+
+<a class="skip" href="#main">{t.skip}</a>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__mark" href="#top" aria-label="Tiziano Messina">
+      <span class="nav__glyph" aria-hidden="true"></span>
+      <span class="nav__name">Tiziano Messina</span>
+    </a>
+    <nav class="nav__links" aria-label={t.nav.menu}>
+      <a href="#projects">{t.nav.projects}</a>
+      <a href="#skills">{t.nav.skills}</a>
+    </nav>
+    <div class="nav__end">
+      <nav class="lang" aria-label={t.nav.lang}>
+        {langs.map((l) => (
+          <a href={l.href} hreflang={l.hreflang} lang={l.hreflang} aria-label={l.name} aria-current={l.code === lang ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))}
+      </nav>
+      <a class="btn btn--primary btn--sm nav__contact" href="#contact">{t.nav.contact}</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <!-- Hero -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap me-scene">
+      <div class="me-scene__text">
+        <h1 id="hero-title" class="hero__title">
+          <span class="nowrap">{t.hero.headline[0]}{' '}<span class="agro-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10" /><path d="M10 20c5.5-2.5.8-6.4 3-10" /><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z" /><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" /></svg></span></span>{' '}
+          {t.hero.headline[1]}{' '}
+          <span class="nowrap"><span class="lab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="7" rx="1.6" /><rect x="3" y="13.5" width="18" height="7" rx="1.6" /><path d="M7 7h5M7 17h5" /><circle class="led" cx="17" cy="7" r="1.3" stroke="none" /><circle class="led" cx="17" cy="17" r="1.3" stroke="none" /></svg></span>{' '}{t.hero.headline[2]}</span>
+        </h1>
+
+        <div class="hero__id">
+          <p class="hero__name">
+            {t.hero.name}<span class="hero__age">, <data value={age} data-age data-birth={BIRTH_DATE}>{age}</data> {t.hero.ageUnit}</span>
+          </p>
+          <p class="hero__role">{t.hero.role}</p>
+          <p class="hero__status"><span class="hero__dot" aria-hidden="true"></span>{t.hero.status}</p>
+          <p class="hero__facts">{t.hero.facts}</p>
+        </div>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#projects">
+            {t.hero.primary}
+            <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" /></svg>
+          </a>
+          <span class="email">
+            <a class="email__link" href={`mailto:${links.email}`}>{links.email}</a>
+            <button class="email__copy" type="button" data-copy={links.email} data-copied={t.hero.copied} aria-label={t.hero.copy}>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" /><path d="M10.5 5.5v-2a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 3.5V9A1.5 1.5 0 0 0 4 10.5h1.5" /></svg>
+              <span class="email__done" aria-live="polite"></span>
+            </button>
+          </span>
+          <span class="profiles">
+            <a class="link" href={links.linkedin} rel="me">LinkedIn</a>
+            <a class="link" href={links.github} rel="me">GitHub</a>
+          </span>
+        </div>
+      </div>
+      <figure class="me-scene__photo"><img src={asset('/img/me-lake.webp')} width="460" height="460" alt={t.hero.photoAlt} fetchpriority="high" /></figure>
+    </div>
+
+    <!-- Both projects at once, each a door into its section -->
+    <div class="stage">
+      <div class="wrap">
+        <ul class="showcase" role="list" aria-label={t.showcase.label}>
+          {t.showcase.items.map((item, i) => (
+            <li class={`showcase__item showcase__item--${item.id}`}>
+              <a class="showcase__link" href={`#p-${item.id}`}>
+                <div class="frame">
+                  <div class="frame__bar" aria-hidden="true"><span class="frame__label">{item.frame}</span><span class="frame__tag">{item.tag}</span></div>
+                  <picture>
+                    <source media="(max-width: 47.99rem)" srcset={asset(item.mobile.src)} width={item.mobile.w} height={item.mobile.h} />
+                    <img
+                      src={asset(item.shot.src)}
+                      width={item.shot.w}
+                      height={item.shot.h}
+                      alt={item.alt}
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+                <span class="showcase__meta">
+                  <span class="showcase__name">{item.name}<svg class="showcase__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg></span>
+                  <span class="showcase__caption">{item.caption}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects" aria-labelledby="projects-title">
+    <div class="wrap">
+      <header class="section__head">
+        <h2 id="projects-title" class="section__title">{t.projects.heading}</h2>
+        <p class="section__intro">{t.projects.intro}</p>
+      </header>
+
+      <article class="project reveal" aria-labelledby="p-agroapp">
+        <div class="project__text">
+          <h3 id="p-agroapp" class="project__name">{a.name}</h3>
+          <p class="project__summary">{a.summary}</p>
+          <ul class="points" role="list">
+            {a.points.map((p) => <li>{p}</li>)}
+          </ul>
+          <p class="project__credit">{a.credit}</p>
+          <div class="project__links">
+            {a.links.filter((l) => l.primary).map((l) => (
+              <a class="btn btn--primary" href={l.href}>
+                {l.label}
+                <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+              </a>
+            ))}
+            <span class="project__more">
+              {a.links.filter((l) => !l.primary).map((l) => (
+                <a class="link" href={l.href}>
+                  {l.label}
+                  <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+                </a>
+              ))}
+            </span>
+          </div>
+        </div>
+        <div class="project__visual">
+          <div class="plate">
+            <div class="frame">
+              <div class="frame__bar" aria-hidden="true"><span class="frame__label">{a.visual.label}</span></div>
+              <picture>
+                <source media="(max-width: 47.99rem)" srcset={asset(a.visual.mobile.src)} width={a.visual.mobile.w} height={a.visual.mobile.h} />
+                <img src={asset(a.visual.src)} width={a.visual.w} height={a.visual.h} alt={a.visual.alt} loading="lazy" decoding="async" />
+              </picture>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="project project--flip reveal" aria-labelledby="p-homelab">
+        <div class="project__text">
+          <h3 id="p-homelab" class="project__name">{h.name}</h3>
+          <p class="project__summary">{h.summary}</p>
+          <ul class="points" role="list">
+            {h.points.map((p) => <li>{p}</li>)}
+          </ul>
+          <p class="project__credit">{h.credit}</p>
+          <div class="services">
+            <p class="services__label">
+              {h.servicesLabel}
+              <span class="services__count">{running} {h.states.running.toLowerCase()}</span>
+            </p>
+            <ul class="services__list" role="list">
+              {h.services.map((s) => (
+                <li class={`svc svc--${s.state}`}>
+                  <span class="svc__dot" aria-hidden="true"></span>
+                  {s.name}
+                  {s.state !== 'running' && <span class="svc__state">{h.states[s.state]}</span>}
+                  {s.state === 'running' && <span class="sr-only">({h.states.running})</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="outage">
+            <h4 class="outage__title">{h.outage.heading}</h4>
+            <dl class="outage__steps">
+              {h.outage.steps.map(([k, v]) => (
+                <div class="outage__step">
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div class="project__links">
+            {h.links.filter((l) => l.primary).map((l) => (
+              <a class="btn btn--primary" href={l.href}>
+                {l.label}
+                <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+              </a>
+            ))}
+            <span class="project__more">
+              {h.links.filter((l) => !l.primary).map((l) => (
+                <a class="link" href={l.href}>
+                  {l.label}
+                  <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+                </a>
+              ))}
+            </span>
+          </div>
+        </div>
+        <div class="project__visual">
+          <div class="plate plate--stack">
+            {h.visuals.map((v, i) => (
+              <div class={`frame frame--layer frame--layer-${i + 1}`}>
+                <div class="frame__bar" aria-hidden="true"><span class="frame__label">{v.label}</span><span class="frame__tag">{v.tag}</span></div>
+                <picture>
+                  {v.mobile && <source media="(max-width: 47.99rem)" srcset={asset(v.mobile.src)} width={v.mobile.w} height={v.mobile.h} />}
+                  <img src={asset(v.src)} width={v.w} height={v.h} alt={v.alt} loading="lazy" decoding="async" />
+                </picture>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section section--tint" id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <header class="section__head">
+        <h2 id="skills-title" class="section__title">{t.skills.heading}</h2>
+        <p class="section__intro">{t.skills.intro}</p>
+      </header>
+      <dl class="skills">
+        {t.skills.groups.map((g) => (
+          <div class="skills__row">
+            <dt>
+              <span class="skills__name">{g.name}</span>
+              <span class="skills__proof">{g.proof}</span>
+            </dt>
+            <dd>
+              <ul class="skills__items" role="list">
+                {g.items.map((s) => <li>{s}</li>)}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact__in">
+      <h2 id="contact-title" class="contact__title">{t.contact.heading}</h2>
+      <p class="contact__lead">{t.contact.lead}</p>
+      <span class="contact__mailrow">
+        <a class="contact__email" href={`mailto:${links.email}`}>{links.email}</a>
+        <button class="email__copy email__copy--dark" type="button" data-copy={links.email} data-copied={t.hero.copied} aria-label={t.hero.copy}>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" /><path d="M10.5 5.5v-2a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 3.5V9A1.5 1.5 0 0 0 4 10.5h1.5" /></svg>
+          <span class="email__done" aria-live="polite"></span>
+        </button>
+      </span>
+      <div class="contact__links">
+        <a class="btn btn--light" href={links.linkedin} rel="me">
+          LinkedIn
+          <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+        </a>
+        <a class="btn btn--outline-light" href={links.github} rel="me">
+          GitHub
+          <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span>© {year} Tiziano Messina · {t.footer.place}</span>
+    <span>{t.footer.built}</span>
+  </div>
+</footer>
+
+<script>
+  // Keep the age true after the build date.
+  const ageEl = document.querySelector<HTMLDataElement>('[data-age]');
+  if (ageEl?.dataset.birth) {
+    const [y, m, d] = ageEl.dataset.birth.split('-').map(Number);
+    const now = new Date();
+    let age = now.getFullYear() - y;
+    if (now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d)) age -= 1;
+    ageEl.value = String(age);
+    ageEl.textContent = String(age);
+  }
+
+  // Copy the email address, with a short spoken/visible confirmation.
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const done = btn.querySelector<HTMLElement>('.email__done');
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy!);
+        btn.classList.add('is-copied');
+        if (done) done.textContent = btn.dataset.copied ?? '';
+        setTimeout(() => {
+          btn.classList.remove('is-copied');
+          if (done) done.textContent = '';
+        }, 1800);
+      } catch {
+        window.location.href = `mailto:${btn.dataset.copy}`;
+      }
+    });
+  });
+
+  // Smooth scrolling only for clicks inside the page, never on arrival.
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href')!.slice(1);
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth' });
+      history.pushState(null, '', `#${id}`);
+      if (id === 'main') (target as HTMLElement).focus({ preventScroll: true });
+    });
+  });
+
+  // Language switch: land on the same section in the other language.
+  document.querySelectorAll<HTMLAnchorElement>('.lang a').forEach((a) => {
+    a.addEventListener('click', () => {
+      const ids = ['top', 'projects', 'p-agroapp', 'p-homelab', 'skills', 'contact'];
+      let current = '';
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.3) current = id;
+      }
+      if (current && current !== 'top') a.href = a.href.split('#')[0] + '#' + current;
+    });
+  });
+
+  // Reveal the project articles as they enter, only when they start below the fold.
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!calm && !location.hash && 'IntersectionObserver' in window) {
+    const els = [...document.querySelectorAll<HTMLElement>('.reveal')].filter(
+      (el) => el.getBoundingClientRect().top > window.innerHeight,
+    );
+    const io = new IntersectionObserver(
+      (records) => {
+        for (const r of records) {
+          if (!r.isIntersecting) continue;
+          r.target.classList.add('is-in');
+          io.unobserve(r.target);
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px' },
+    );
+    for (const el of els) {
+      el.classList.add('is-pending');
+      io.observe(el);
+    }
+  }
+</script>
