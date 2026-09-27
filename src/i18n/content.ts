@@ -5,7 +5,7 @@ export type Lang = 'en' | 'es';
 export const BIRTH_DATE = '2005-05-02';
 
 export const links = {
-  email: 'tizilmessina@gmail.com',
+  email: 'tizilmessina@icloud.com',
   linkedin: 'https://www.linkedin.com/in/tizianomessina/',
   github: 'https://github.com/tizimessina',
   agroappRepo: 'https://github.com/JereC4/TP-DSW-2025-3k03-Messina-Costantini-Enrico',

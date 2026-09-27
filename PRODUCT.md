@@ -29,7 +29,7 @@ It is a first-hand, owned presence that Tiziano controls, rather than a profile 
 ## Operating Context
 
 - Visitors usually arrive from outside: a shared link, a job application, a LinkedIn or GitHub profile.
-- Contact happens off-site through email (tizilmessina@gmail.com), LinkedIn (https://www.linkedin.com/in/tizianomessina/), and GitHub (https://github.com/tizimessina). There is no contact form.
+- Contact happens off-site through email (tizilmessina@icloud.com), LinkedIn (https://www.linkedin.com/in/tizianomessina/), and GitHub (https://github.com/tizimessina). There is no contact form.
 - The content is bilingual: English and Spanish (Argentina), with a way to switch language.
 
 ## Capabilities and Constraints
