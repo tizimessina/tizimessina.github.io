@@ -72,7 +72,7 @@ const langs = [
           </a>
           <span class="email">
             <a class="email__link" href={`mailto:${links.email}`}>{links.email}</a>
-            <button class="email__copy" type="button" data-copy={links.email} data-copied={t.hero.copied} aria-label={t.hero.copy}>
+            <button class="email__copy" type="button" data-copy={links.email} data-copied={t.hero.copied} data-failed={t.hero.copyFailed} aria-label={t.hero.copy}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" /><path d="M10.5 5.5v-2a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 3.5V9A1.5 1.5 0 0 0 4 10.5h1.5" /></svg>
               <span class="email__done" aria-live="polite"></span>
             </button>
@@ -173,24 +173,23 @@ const langs = [
             {h.points.map((p) => <li>{p}</li>)}
           </ul>
           <p class="project__credit">{h.credit}</p>
-          <div class="services">
-            <p class="services__label">
-              {h.servicesLabel}
-              <span class="services__count">{running} {h.states.running.toLowerCase()}</span>
-            </p>
-            <ul class="services__list" role="list">
-              {h.services.map((s) => (
-                <li class={`svc svc--${s.state}`}>
+          <dl class="services">
+            {(['running', 'next', 'planned'] as const).map((state) => (
+              <div class={`services__row svc--${state}`}>
+                <dt>
                   <span class="svc__dot" aria-hidden="true"></span>
-                  {s.name}
-                  {s.state !== 'running' && <span class="svc__state">{h.states[s.state]}</span>}
-                  {s.state === 'running' && <span class="sr-only">({h.states.running})</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div class="outage">
-            <h4 class="outage__title">{h.outage.heading}</h4>
+                  {state === 'running' ? `${running} ${h.servicesLabel}` : h.states[state]}
+                </dt>
+                <dd>{h.services.filter((s) => s.state === state).map((s) => s.name).join(', ')}</dd>
+              </div>
+            ))}
+          </dl>
+          <details class="outage">
+            <summary class="outage__summary">
+              <span class="outage__title">{h.outage.heading}</span>
+              <span class="outage__line">{h.outage.summary}</span>
+              <span class="outage__more">{h.outage.more}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg></span>
+            </summary>
             <dl class="outage__steps">
               {h.outage.steps.map(([k, v]) => (
                 <div class="outage__step">
@@ -199,7 +198,7 @@ const langs = [
                 </div>
               ))}
             </dl>
-          </div>
+          </details>
           <div class="project__links">
             {h.links.filter((l) => l.primary).map((l) => (
               <a class="btn btn--primary" href={l.href}>
@@ -266,7 +265,7 @@ const langs = [
       <p class="contact__lead">{t.contact.lead}</p>
       <span class="contact__mailrow">
         <a class="contact__email" href={`mailto:${links.email}`}>{links.email}</a>
-        <button class="email__copy email__copy--dark" type="button" data-copy={links.email} data-copied={t.hero.copied} aria-label={t.hero.copy}>
+        <button class="email__copy email__copy--dark" type="button" data-copy={links.email} data-copied={t.hero.copied} data-failed={t.hero.copyFailed} aria-label={t.hero.copy}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" /><path d="M10.5 5.5v-2a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 3.5V9A1.5 1.5 0 0 0 4 10.5h1.5" /></svg>
           <span class="email__done" aria-live="polite"></span>
         </button>
@@ -287,7 +286,7 @@ const langs = [
 
 <footer class="foot">
   <div class="wrap foot__in">
-    <span>© {year} Tiziano Messina · {t.footer.place}</span>
+    <span>© <span data-year>{year}</span> Tiziano Messina · {t.footer.place}</span>
     <span>{t.footer.built}</span>
   </div>
 </footer>
@@ -304,6 +303,9 @@ const langs = [
     ageEl.textContent = String(age);
   }
 
+  const yearEl = document.querySelector('[data-year]');
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
   // Copy the email address, with a short spoken/visible confirmation.
   document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
     btn.addEventListener('click', async () => {
@@ -317,7 +319,19 @@ const langs = [
           if (done) done.textContent = '';
         }, 1800);
       } catch {
-        window.location.href = `mailto:${btn.dataset.copy}`;
+        // No clipboard (insecure context or denied): select the address and say so.
+        const text = btn.parentElement?.querySelector('a');
+        const sel = window.getSelection();
+        if (text && sel) {
+          const range = document.createRange();
+          range.selectNodeContents(text);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+        if (done) done.textContent = btn.dataset.failed ?? '';
+        setTimeout(() => {
+          if (done) done.textContent = '';
+        }, 3200);
       }
     });
   });

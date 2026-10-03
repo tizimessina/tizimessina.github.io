@@ -30,13 +30,13 @@ const img = {
   agroappApi: { src: '/img/agroapp-api.webp', w: 1200, h: 702 },
   agroappApiMobile: { src: '/img/agroapp-api-mobile.webp', w: 760, h: 540 },
   status: { src: '/img/homelab-status.webp', w: 726, h: 432 },
-  statusMobile: { src: '/img/homelab-status-mobile.webp', w: 440, h: 390 },
+  statusMobile: { src: '/img/homelab-status-mobile.webp', w: 760, h: 246 },
   pihole: { src: '/img/pihole.webp', w: 1249, h: 718 },
   piholeMobile: { src: '/img/pihole-mobile.webp', w: 745, h: 125 },
   portainer: { src: '/img/portainer.webp', w: 1800, h: 720 },
 };
 
-// Six services run today; the count everywhere derives from this list.
+// The running count everywhere (captions, services line) derives from this list.
 const services: Service[] = [
   { name: 'Pi-hole + Unbound', state: 'running' },
   { name: 'Caddy', state: 'running' },
@@ -48,6 +48,7 @@ const services: Service[] = [
   { name: 'Gitea', state: 'planned' },
   { name: 'WireGuard', state: 'planned' },
 ];
+const running = services.filter((s) => s.state === 'running').length;
 
 const en = {
   htmlLang: 'en',
@@ -56,7 +57,7 @@ const en = {
   description:
     'Tiziano Messina, 4th-year Information Systems Engineering student at UTN Rosario, Argentina, open to a first junior role. I build software and run it on my own servers.',
   skip: 'Skip to content',
-  nav: { projects: 'Projects', skills: 'Skills & education', contact: 'Contact', menu: 'Sections', lang: 'Language' },
+  nav: { projects: 'Projects', skills: 'Skills', contact: 'Contact', menu: 'Sections', lang: 'Language' },
   hero: {
     headline: ['I build', 'software and run it on my own', 'servers.'],
     name: 'Tiziano Messina',
@@ -67,6 +68,7 @@ const en = {
     primary: 'See projects',
     copy: 'Copy email',
     copied: 'Copied',
+    copyFailed: 'Selected, copy it by hand',
     photoAlt: 'Photo of Tiziano Messina',
   },
   showcase: {
@@ -85,12 +87,12 @@ const en = {
       {
         id: 'homelab',
         name: 'Homelab',
-        caption: '6 services running on a 2014 PC, outages included',
+        caption: `${running} services running on a 2014 PC, outages included`,
         frame: 'uptime-kuma',
-        tag: '6 up · 0 down',
+        tag: '6 up · 0 down', // what the screenshot shows
         shot: img.status,
         mobile: img.statusMobile,
-        alt: 'Uptime Kuma: 6 monitors up, 0 down, above a log of real outages and recoveries.',
+        alt: 'Uptime Kuma: 6 monitors up, 0 down, and the latest events, Pi-hole and AgroApp back up.',
       },
     ],
   },
@@ -124,6 +126,8 @@ const en = {
       credit: 'Personal project, still growing.',
       outage: {
         heading: 'One outage, start to finish',
+        summary: 'DNS went down for every device in the house. Pi-hole was quietly ignoring normal home-network traffic; one setting fixed it, and it’s now pinned in the config.',
+        more: 'Show the four steps',
         steps: [
           ['Symptom', 'Every device on the home network timed out on DNS.'],
           ['Ruled out', 'A manual DNS setting on the client, the router’s client isolation (tcpdump showed the packets arriving) and Docker’s NAT rules.'],
@@ -131,12 +135,12 @@ const en = {
           ['Fix', 'Switched to listeningMode ALL, then pinned it in the compose file so it survives recreating the container.'],
         ] as [string, string][],
       },
-      servicesLabel: 'Services',
       states: { running: 'Running', next: 'Next', planned: 'Planned' },
+      servicesLabel: 'running',
       services,
       links: [
-        { label: 'Read the full write-up (in Spanish)', href: links.homelabWriteup, primary: true },
         { label: 'Source code', href: links.homelabRepo },
+        { label: 'Full write-up (in Spanish)', href: links.homelabWriteup },
       ],
       visuals: [
         { ...img.pihole, mobile: img.piholeMobile, label: 'pihole', tag: '240,687 blocked', alt: 'Pi-hole dashboard: 46,019 queries, 5,948 blocked, 240,687 domains on lists.' },
@@ -150,7 +154,7 @@ const en = {
     groups: [
       { name: 'AgroApp', proof: 'Built a full-stack app with', items: ['TypeScript', 'React', 'Node.js + Express', 'Prisma + MySQL', 'Vite + Tailwind CSS', 'Playwright', 'Git'] },
       { name: 'Homelab', proof: 'Run my own servers with', items: ['Linux (Ubuntu Server)', 'Docker + Compose', 'DNS: Pi-hole, Unbound', 'Caddy', 'Uptime Kuma', 'Shell'] },
-      { name: 'UTN Rosario', proof: 'Information Systems Engineering · 4th year · graduating 2027', items: ['Databases', 'Operating systems', 'Networks', 'Systems analysis & design', 'Object-oriented programming'] },
+      { name: 'UTN Rosario', proof: 'Information Systems Engineering, subjects so far', items: ['Databases', 'Operating systems', 'Networks', 'Systems analysis & design', 'Object-oriented programming'] },
     ],
   },
   contact: {
@@ -158,6 +162,7 @@ const en = {
     lead: 'I’m looking for my first role in software or infrastructure. Write me about a position, an interview or anything on this page.',
   },
   footer: { place: 'Rosario, Argentina', built: 'Built with Astro.' },
+  ogAlt: 'Tiziano Messina, Information Systems Engineering student at UTN Rosario, open to a first junior role.',
 };
 
 type Content = typeof en;
@@ -169,7 +174,7 @@ const es: Content = {
   description:
     'Tiziano Messina, estudiante de 4.º año de Ingeniería en Sistemas de Información en la UTN Rosario, Argentina, buscando su primer trabajo junior. Desarrollo software y lo corro en mis propios servidores.',
   skip: 'Ir al contenido',
-  nav: { projects: 'Proyectos', skills: 'Habilidades y formación', contact: 'Contacto', menu: 'Secciones', lang: 'Idioma' },
+  nav: { projects: 'Proyectos', skills: 'Habilidades', contact: 'Contacto', menu: 'Secciones', lang: 'Idioma' },
   hero: {
     headline: ['Desarrollo', 'software y lo corro en mis propios', 'servidores.'],
     name: 'Tiziano Messina',
@@ -180,6 +185,7 @@ const es: Content = {
     primary: 'Ver proyectos',
     copy: 'Copiar email',
     copied: 'Copiado',
+    copyFailed: 'Seleccionado, copialo a mano',
     photoAlt: 'Foto de Tiziano Messina',
   },
   showcase: {
@@ -198,12 +204,12 @@ const es: Content = {
       {
         id: 'homelab',
         name: 'Homelab',
-        caption: '6 servicios andando en una PC de 2014, caídas incluidas',
+        caption: `${running} servicios andando en una PC de 2014, caídas incluidas`,
         frame: 'uptime-kuma',
         tag: '6 arriba · 0 caídos',
         shot: img.status,
         mobile: img.statusMobile,
-        alt: 'Uptime Kuma: 6 monitores arriba, 0 caídos, sobre un log de caídas y recuperaciones reales.',
+        alt: 'Uptime Kuma: 6 monitores arriba, 0 caídos, y los últimos eventos, Pi-hole y AgroApp de nuevo arriba.',
       },
     ],
   },
@@ -237,18 +243,20 @@ const es: Content = {
       credit: 'Proyecto personal, en construcción.',
       outage: {
         heading: 'Una caída, de principio a fin',
+        summary: 'Se cayó el DNS para todos los dispositivos de la casa. Pi-hole ignoraba en silencio el tráfico normal de la red; lo arregló un ajuste, que ahora quedó fijado en la configuración.',
+        more: 'Ver los cuatro pasos',
         steps: [
           ['Síntoma', 'Todos los dispositivos de la red de casa daban timeout en el DNS.'],
           ['Descartado', 'Un DNS manual en el cliente, el aislamiento de clientes del router (tcpdump mostraba que los paquetes llegaban) y las reglas NAT de Docker.'],
           ['Causa', 'Pi-hole arranca con listeningMode LOCAL, que descarta en silencio las consultas que no considera locales, incluido el tráfico normal de la LAN que pasa por el NAT de Docker. El log de FTL lo decía: “ignoring query from non-local network”.'],
-          ['Fix', 'Pasé a listeningMode ALL y lo dejé fijado en el compose para que sobreviva a recrear el container.'],
+          ['Solución', 'Pasé a listeningMode ALL y lo dejé fijado en el compose para que sobreviva a recrear el container.'],
         ] as [string, string][],
       },
-      servicesLabel: 'Servicios',
       states: { running: 'Andando', next: 'Próximo', planned: 'Planeado' },
+      servicesLabel: 'andando',
       services,
       links: [
-        { label: 'Leer el caso completo', href: links.homelabWriteup, primary: true },
+        { label: 'Leer el caso completo', href: links.homelabWriteup },
         { label: 'Código fuente', href: links.homelabRepo },
       ],
       visuals: [
@@ -263,7 +271,7 @@ const es: Content = {
     groups: [
       { name: 'AgroApp', proof: 'Hice una app full-stack con', items: ['TypeScript', 'React', 'Node.js + Express', 'Prisma + MySQL', 'Vite + Tailwind CSS', 'Playwright', 'Git'] },
       { name: 'Homelab', proof: 'Corro mis propios servidores con', items: ['Linux (Ubuntu Server)', 'Docker + Compose', 'DNS: Pi-hole, Unbound', 'Caddy', 'Uptime Kuma', 'Shell'] },
-      { name: 'UTN Rosario', proof: 'Ingeniería en Sistemas de Información · 4.º año · me recibo en 2027', items: ['Bases de datos', 'Sistemas operativos', 'Redes', 'Análisis y diseño de sistemas', 'Programación orientada a objetos'] },
+      { name: 'UTN Rosario', proof: 'Ingeniería en Sistemas de Información, materias cursadas', items: ['Bases de datos', 'Sistemas operativos', 'Redes', 'Análisis y diseño de sistemas', 'Programación orientada a objetos'] },
     ],
   },
   contact: {
@@ -271,6 +279,7 @@ const es: Content = {
     lead: 'Busco mi primer trabajo en software o infraestructura. Escribime por un puesto, una entrevista o cualquier cosa de esta página.',
   },
   footer: { place: 'Rosario, Argentina', built: 'Hecho con Astro.' },
+  ogAlt: 'Tiziano Messina, estudiante de Ingeniería en Sistemas de Información en la UTN Rosario, buscando su primer trabajo junior.',
 };
 
 export const content: Record<Lang, Content> = { en, es };

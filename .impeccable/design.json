@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-27T23:59:00Z",
+  "generatedAt": "2026-09-28T16:30:00Z",
   "title": "Design System: Tiziano Messina",
   "extensions": {
     "colorMeta": {
@@ -276,11 +276,11 @@
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Running text, the hero role line (1.45, max 52ch) and skill item pills (weight 500)."
+        "purpose": "Running text and the hero role line (1.45, max 52ch)."
       },
       "ui": {
         "displayName": "UI",
-        "purpose": "Small buttons, the availability pill, credits, services, showcase captions, skill proof lines, the hero facts line (400, Slate Secondary), outage step terms (600) and details (400, 1.5, Slate Secondary), and the copied confirmation label (0.875rem, 560)."
+        "purpose": "Small buttons, credits, services (running label 600, Next and Planned 500, names 400), showcase captions, skill proof lines, the hero facts line (500, ink), the outage summary line (400, 1.5, Slate Secondary), the outage toggle (560), outage step terms (600) and details (400, 1.5, Slate Secondary), and the copy confirmation label (0.875rem, 560)."
       },
       "button": {
         "displayName": "Button",
@@ -288,11 +288,19 @@
       },
       "caption": {
         "displayName": "Caption",
-        "purpose": "Footer text and small state words."
+        "purpose": "Footer text and the copy confirmation label."
       },
       "card-title": {
         "displayName": "Card Title",
         "purpose": "The outage card title (1.0625rem, 640, -0.01em)."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "The hero availability line (1.0625rem, 600, ink), led by the gold dot; plain text, no pill."
+      },
+      "item": {
+        "displayName": "Item",
+        "purpose": "Skill items (1.1875rem, 500, -0.01em) as plain ink text separated by Slate Secondary middle dots."
       },
       "label-mono": {
         "displayName": "Label Mono",
@@ -343,7 +351,7 @@
       {
         "name": "availability-ring",
         "value": "0 0 0 3px rgb(245 176 0 / 0.22)",
-        "purpose": "Flat soft gold ring around the hero availability dot."
+        "purpose": "Flat soft gold ring around the dot on the hero availability line."
       },
       {
         "name": "stage-glow",
@@ -368,9 +376,9 @@
         "purpose": "A showcase frame rising on hover."
       },
       {
-        "name": "icon-hover",
-        "value": "transform 0.45s, to rotate(0deg) scale(1.1)",
-        "purpose": "Headline app-icon marks straighten and grow on hover."
+        "name": "outage-toggle",
+        "value": "transform 0.3s, chevron to rotate(180deg)",
+        "purpose": "The outage card chevron turning when the four steps open."
       },
       {
         "name": "reveal",
@@ -388,6 +396,11 @@
         "purpose": "How long the email copy button holds its gold border and Copied label."
       },
       {
+        "name": "copy-failed",
+        "value": "3.2s",
+        "purpose": "How long the \"Selected, copy it by hand\" label stays after the address is selected because the clipboard is unavailable."
+      },
+      {
         "name": "view-transition",
         "value": "0.25s",
         "purpose": "Cross-page language switch."
@@ -395,12 +408,16 @@
       {
         "name": "reduced-motion",
         "value": "none",
-        "purpose": "Showcase lift, icon hover, reveals and view transitions are disabled under prefers-reduced-motion; in-page anchor clicks jump instantly."
+        "purpose": "Showcase lift and arrow, reveals and view transitions are disabled under prefers-reduced-motion; in-page anchor clicks jump instantly."
       }
     ],
     "breakpoints": [
       {
-        "name": "services-outage-single",
+        "name": "services-single",
+        "value": "max-width: 22rem"
+      },
+      {
+        "name": "outage-single",
         "value": "max-width: 26rem"
       },
       {
@@ -422,7 +439,7 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Sol de Mayo Gold pill with ink text for the main action on any surface.",
+      "description": "Sol de Mayo Gold pill with ink text; on the page only for the nav Contact, the hero \"See projects\" and AgroApp's \"Open agroapp.dev\".",
       "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">See projects <svg class=\"ds-btn-icon\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M5 11 11 5M6 5h5v5\"/></svg></a>",
       "css": ".ds-btn { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3rem; padding: 0 1.35rem; border-radius: 999px; border: 1px solid transparent; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); font-size: 1rem; font-weight: 560; letter-spacing: -0.005em; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s cubic-bezier(0.16,1,0.3,1), transform 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-btn:active { transform: translateY(1px); } .ds-btn:focus-visible { outline: 2px solid var(--ink, #0a0a0b); outline-offset: 3px; } .ds-btn-icon { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-btn:hover .ds-btn-icon { transform: translate(2px, -2px); } .ds-btn-primary { background: var(--accent, #f5b000); color: var(--ink, #0a0a0b); box-shadow: inset 0 -2px 0 rgb(10 10 11 / 0.14); } .ds-btn-primary:hover { background: var(--accent-hover, #ffc629); }"
     },
@@ -430,7 +447,7 @@
       "name": "Email with Copy Button",
       "kind": "button",
       "refersTo": "email-copy",
-      "description": "The email as an underlined text link beside a 2.75rem round copy button; on success the border turns gold for 1.8s and a small Copied label appears below via a polite live region. A dark variant sits beside the big contact-band email.",
+      "description": "The email as an underlined text link beside a 2.75rem round copy button; on success the border turns gold for 1.8s and a small Copied label appears below via a polite live region. If the clipboard is unavailable the address is selected and the label reads \"Selected, copy it by hand\" for 3.2s. A dark variant sits beside the big contact-band email.",
       "html": "<span class=\"ds-email\"><a class=\"ds-email-link\" href=\"#\">tizilmessina@icloud.com</a><button class=\"ds-copy is-copied\" type=\"button\" aria-label=\"Copy email\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><rect x=\"5.5\" y=\"5.5\" width=\"8\" height=\"8\" rx=\"1.5\"/><path d=\"M10.5 5.5v-2a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 3.5V9A1.5 1.5 0 0 0 4 10.5h1.5\"/></svg><span class=\"ds-done\" aria-live=\"polite\">Copied</span></button></span>",
       "css": ".ds-email { display: inline-flex; align-items: center; gap: 0.25rem; padding-bottom: 1.5rem; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-email-link { display: inline-flex; align-items: center; min-height: 2.75rem; color: inherit; font-weight: 560; text-decoration: underline; text-decoration-color: var(--line, #deded9); text-decoration-thickness: 1.5px; text-underline-offset: 0.3em; transition: text-decoration-color 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-email-link:hover { text-decoration-color: var(--accent, #f5b000); text-decoration-thickness: 3px; } .ds-copy { position: relative; display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; flex: none; border: 1px solid var(--line, #deded9); border-radius: 999px; background: var(--surface, #fff); color: var(--ink, #0a0a0b); cursor: pointer; transition: border-color 0.2s cubic-bezier(0.16,1,0.3,1), background-color 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-copy:hover { border-color: var(--ink, #0a0a0b); } .ds-copy:focus-visible { outline: 2px solid var(--ink, #0a0a0b); outline-offset: 3px; } .ds-copy svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; } .ds-copy.is-copied { border-color: var(--accent, #f5b000); } .ds-done { position: absolute; top: calc(100% + 0.35rem); left: 50%; transform: translateX(-50%); font-size: 0.875rem; font-weight: 560; white-space: nowrap; pointer-events: none; } .ds-done:empty { display: none; }"
     },
@@ -446,25 +463,25 @@
       "name": "Text Link",
       "kind": "custom",
       "refersTo": "link",
-      "description": "Secondary inline action; ink text whose hairline underline thickens to 3px gold on hover. In each project the link row is a column: the one gold proof button first, then source code and API docs as text links on their own row, wrapping together.",
-      "html": "<div class=\"ds-links\"><a class=\"ds-btn-p\" href=\"#\">Read the full write-up (in Spanish)</a><span class=\"ds-more\"><a class=\"ds-link\" href=\"#\">Source code</a><a class=\"ds-link\" href=\"#\">API docs</a></span></div>",
+      "description": "Secondary inline action; ink text whose hairline underline thickens to 3px gold on hover. AgroApp's link row is a column: its one gold button, then API docs and source code as text links on their own row. Homelab has no gold button; its row is two text links (source code and the full write-up).",
+      "html": "<div class=\"ds-links\"><a class=\"ds-btn-p\" href=\"#\">Open agroapp.dev</a><span class=\"ds-more\"><a class=\"ds-link\" href=\"#\">API docs</a><a class=\"ds-link\" href=\"#\">Source code</a></span></div><div class=\"ds-links\"><span class=\"ds-more\"><a class=\"ds-link\" href=\"#\">Source code</a><a class=\"ds-link\" href=\"#\">Full write-up (in Spanish)</a></span></div>",
       "css": ".ds-links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem 1.4rem; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); } .ds-btn-p { display: inline-flex; align-items: center; min-height: 3rem; padding: 0 1.35rem; border-radius: 999px; background: var(--accent, #f5b000); color: var(--ink, #0a0a0b); box-shadow: inset 0 -2px 0 rgb(10 10 11 / 0.14); font-size: 1rem; font-weight: 560; text-decoration: none; transition: background-color 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-btn-p:hover { background: var(--accent-hover, #ffc629); } .ds-more { display: inline-flex; flex-wrap: wrap; gap: 0 1.1rem; } .ds-link { display: inline-flex; align-items: center; min-height: 3rem; color: var(--ink, #0a0a0b); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); font-weight: 540; text-decoration: underline; text-decoration-color: var(--line, #deded9); text-decoration-thickness: 1.5px; text-underline-offset: 0.3em; transition: color 0.25s cubic-bezier(0.16,1,0.3,1), text-decoration-color 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-link:hover { text-decoration-color: var(--accent, #f5b000); text-decoration-thickness: 3px; } .ds-link:focus-visible { outline: 2px solid var(--ink, #0a0a0b); outline-offset: 3px; border-radius: 7px; }"
     },
     {
       "name": "Navigation",
       "kind": "nav",
       "refersTo": "nav",
-      "description": "Sticky translucent bar with mark (gold dot), pill links, language switch and small gold Contact button; every control holds a 2.75rem target. Below 29.99rem the name hides and Contact stays. The language switch carries the reader's current section to the other language as a hash. Language segments are labeled \"EN · English\" / \"ES · Español\".",
-      "html": "<header class=\"ds-nav\"><a class=\"ds-mark\" href=\"#\"><span class=\"ds-glyph\"></span><span class=\"ds-name\">Tiziano Messina</span></a><nav class=\"ds-links\"><a href=\"#\">Projects</a><a href=\"#\">Skills &amp; education</a></nav><div class=\"ds-lang\"><a href=\"#\" aria-label=\"EN · English\" aria-current=\"page\">EN</a><a href=\"#\" aria-label=\"ES · Español\">ES</a></div><a class=\"ds-sm\" href=\"#\">Contact</a></header>",
-      "css": ".ds-nav { display: flex; align-items: center; gap: 1.25rem; height: 4rem; padding: 0 1.5rem; background: rgb(245 245 244 / 0.82); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line, #deded9); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-mark { display: inline-flex; align-items: center; min-height: 2.75rem; gap: 0.6rem; font-weight: 640; letter-spacing: -0.02em; color: inherit; text-decoration: none; } .ds-glyph { position: relative; width: 1.5rem; height: 1.5rem; border-radius: 7px; background: var(--ink, #0a0a0b); } .ds-glyph::after { content: ''; position: absolute; right: 0.3rem; bottom: 0.3rem; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--accent, #f5b000); } .ds-links { display: flex; gap: 0.25rem; margin-right: auto; } .ds-links a { padding: 0.45rem 0.8rem; border-radius: 999px; color: var(--ink-2, #52525b); font-size: 0.9375rem; font-weight: 500; text-decoration: none; transition: color 0.2s, background-color 0.2s; } .ds-links a:hover { color: var(--ink, #0a0a0b); background: var(--tint, #ebebe9); } .ds-lang { display: flex; padding: 3px; border-radius: 999px; background: var(--tint, #ebebe9); } .ds-lang a { position: relative; min-width: 2.75rem; padding: 0.3rem 0.6rem; border-radius: 999px; color: var(--ink-2, #52525b); font-size: 0.875rem; font-weight: 600; text-align: center; text-decoration: none; } .ds-lang a::after { content: ''; position: absolute; inset: -7px 0; } .ds-lang a:hover { color: var(--ink, #0a0a0b); } .ds-lang a[aria-current='page'] { background: var(--surface, #fff); color: var(--ink, #0a0a0b); box-shadow: 0 1px 2px rgb(10 10 11 / 0.12), 0 1px 1px rgb(10 10 11 / 0.06); } .ds-sm { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1.05rem; border-radius: 999px; background: var(--accent, #f5b000); color: var(--ink, #0a0a0b); box-shadow: inset 0 -2px 0 rgb(10 10 11 / 0.14); font-size: 0.9375rem; font-weight: 560; text-decoration: none; } .ds-sm:hover { background: var(--accent-hover, #ffc629); } .ds-nav a:focus-visible { outline: 2px solid var(--ink, #0a0a0b); outline-offset: 3px; border-radius: 7px; } @media (max-width: 47.99rem) { .ds-links { display: none; } } @media (max-width: 29.99rem) { .ds-name { display: none; } }"
+      "description": "Sticky translucent bar with mark (gold dot), two short pill links (Projects, Skills), language switch and small gold Contact button; every control, nav links included, holds a 2.75rem target. Below 29.99rem the name hides and Contact stays. The language switch carries the reader's current section to the other language as a hash. Language segments are labeled \"EN · English\" / \"ES · Español\".",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-mark\" href=\"#\"><span class=\"ds-glyph\"></span><span class=\"ds-name\">Tiziano Messina</span></a><nav class=\"ds-links\"><a href=\"#\">Projects</a><a href=\"#\">Skills</a></nav><div class=\"ds-lang\"><a href=\"#\" aria-label=\"EN · English\" aria-current=\"page\">EN</a><a href=\"#\" aria-label=\"ES · Español\">ES</a></div><a class=\"ds-sm\" href=\"#\">Contact</a></header>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 2rem; height: 4rem; padding: 0 1.5rem; background: rgb(245 245 244 / 0.82); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line, #deded9); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-mark { display: inline-flex; align-items: center; min-height: 2.75rem; gap: 0.6rem; font-weight: 640; letter-spacing: -0.02em; color: inherit; text-decoration: none; } .ds-glyph { position: relative; width: 1.5rem; height: 1.5rem; border-radius: 7px; background: var(--ink, #0a0a0b); } .ds-glyph::after { content: ''; position: absolute; right: 0.3rem; bottom: 0.3rem; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--accent, #f5b000); } .ds-links { display: flex; gap: 0.25rem; margin-right: auto; } .ds-links a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.8rem; border-radius: 999px; color: var(--ink-2, #52525b); font-size: 0.9375rem; font-weight: 500; text-decoration: none; transition: color 0.2s, background-color 0.2s; } .ds-links a:hover { color: var(--ink, #0a0a0b); background: var(--tint, #ebebe9); } .ds-lang { display: flex; padding: 3px; border-radius: 999px; background: var(--tint, #ebebe9); } .ds-lang a { position: relative; min-width: 2.75rem; padding: 0.3rem 0.6rem; border-radius: 999px; color: var(--ink-2, #52525b); font-size: 0.875rem; font-weight: 600; text-align: center; text-decoration: none; } .ds-lang a::after { content: ''; position: absolute; inset: -7px 0; } .ds-lang a:hover { color: var(--ink, #0a0a0b); } .ds-lang a[aria-current='page'] { background: var(--surface, #fff); color: var(--ink, #0a0a0b); box-shadow: 0 1px 2px rgb(10 10 11 / 0.12), 0 1px 1px rgb(10 10 11 / 0.06); } .ds-sm { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1.05rem; border-radius: 999px; background: var(--accent, #f5b000); color: var(--ink, #0a0a0b); box-shadow: inset 0 -2px 0 rgb(10 10 11 / 0.14); font-size: 0.9375rem; font-weight: 560; text-decoration: none; } .ds-sm:hover { background: var(--accent-hover, #ffc629); } .ds-nav a:focus-visible { outline: 2px solid var(--ink, #0a0a0b); outline-offset: 3px; border-radius: 7px; } @media (max-width: 47.99rem) { .ds-links { display: none; } } @media (max-width: 29.99rem) { .ds-name { display: none; } }"
     },
     {
       "name": "Hero Identity",
       "kind": "custom",
-      "refersTo": "status-pill",
-      "description": "Name with age, role line, the availability pill led by a gold dot in a soft gold ring, and a Slate Secondary facts line.",
+      "refersTo": "hero-status",
+      "description": "Name with age, role line, the availability line (plain 600-weight text led by a gold dot in a soft gold ring, no border or background), and an ink facts line at weight 500.",
       "html": "<div class=\"ds-id\"><p class=\"ds-name\">Tiziano Messina<span class=\"ds-age\">, 21 years old</span></p><p class=\"ds-role\">Information Systems Engineering student, 4th year at UTN Rosario, Argentina</p><p class=\"ds-status\"><span class=\"ds-dot\" aria-hidden=\"true\"></span>Open to my first junior role</p><p class=\"ds-facts\">Graduating 2027 · Remote, hybrid or on-site in Rosario · English B2</p></div>",
-      "css": ".ds-id { display: grid; gap: 0.35rem; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-id p { margin: 0; } .ds-name { font-size: 1.375rem; font-weight: 640; letter-spacing: -0.02em; line-height: 1.2; } .ds-age { color: var(--ink-2, #52525b); font-weight: 500; font-variant-numeric: tabular-nums; } .ds-role { max-width: 52ch; font-size: 1.0625rem; line-height: 1.45; } .ds-status { display: inline-flex; align-items: center; justify-self: start; gap: 0.55rem; margin-top: 0.4rem; padding: 0.4rem 0.9rem; border: 1px solid var(--line, #deded9); border-radius: 999px; background: var(--surface, #fff); font-size: 0.9375rem; font-weight: 560; } .ds-dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--accent, #f5b000); box-shadow: 0 0 0 3px rgb(245 176 0 / 0.22); } .ds-facts { margin-top: 0.15rem; color: var(--ink-2, #52525b); font-size: 0.9375rem; }"
+      "css": ".ds-id { display: grid; gap: 0.35rem; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-id p { margin: 0; } .ds-name { font-size: 1.375rem; font-weight: 640; letter-spacing: -0.02em; line-height: 1.2; } .ds-age { color: var(--ink-2, #52525b); font-weight: 500; font-variant-numeric: tabular-nums; } .ds-role { max-width: 52ch; font-size: 1.0625rem; line-height: 1.45; } .ds-status { display: inline-flex; align-items: center; justify-self: start; gap: 0.6rem; margin-top: 0.5rem; font-size: 1.0625rem; font-weight: 600; } .ds-dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--accent, #f5b000); box-shadow: 0 0 0 3px rgb(245 176 0 / 0.22); } .ds-facts { color: var(--ink, #0a0a0b); font-size: 0.9375rem; font-weight: 500; }"
     },
     {
       "name": "Headline App Icons",
@@ -472,15 +489,15 @@
       "refersTo": "headline-icon-agro",
       "description": "Two tilted, decorative app-icon marks set inline in the hero headline, each bound to its neighboring word in a nowrap span so it never strands at a line start; the Homelab rack carries two steady gold LEDs.",
       "html": "<h1 class=\"ds-hl\"><span class=\"ds-nowrap\">I build <span class=\"ds-icon ds-icon-agro\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 20h10\"/><path d=\"M10 20c5.5-2.5.8-6.4 3-10\"/><path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z\"/><path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z\"/></svg></span></span> software and run it on my own <span class=\"ds-nowrap\"><span class=\"ds-icon ds-icon-lab\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3.5\" width=\"18\" height=\"7\" rx=\"1.6\"/><rect x=\"3\" y=\"13.5\" width=\"18\" height=\"7\" rx=\"1.6\"/><path d=\"M7 7h5M7 17h5\"/><circle class=\"ds-led\" cx=\"17\" cy=\"7\" r=\"1.3\" stroke=\"none\"/><circle class=\"ds-led\" cx=\"17\" cy=\"17\" r=\"1.3\" stroke=\"none\"/></svg></span> servers.</span></h1>",
-      "css": ".ds-hl { margin: 0; max-width: 16ch; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); font-size: clamp(2.4rem, 0.9rem + 4.2vw, 4.75rem); font-weight: 650; line-height: 0.98; letter-spacing: -0.04em; color: var(--ink, #0a0a0b); } .ds-icon { display: inline-grid; place-items: center; width: 0.8em; height: 0.8em; margin-inline: 0.04em; border-radius: 0.2em; vertical-align: -0.04em; transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); } .ds-icon:hover { transform: rotate(0deg) scale(1.1); } .ds-icon-agro { background: var(--agro-green, #2f6b46); color: #fff; box-shadow: 0 0.1em 0.28em -0.06em rgb(10 10 11 / 0.45), inset 0 -0.04em 0 rgb(0 0 0 / 0.18); transform: rotate(-5deg); } .ds-icon-agro svg { width: 62%; height: 62%; } .ds-icon-lab { background: var(--stage-2, #18181b); color: var(--on-stage, #f4f4f5); box-shadow: 0 0.1em 0.28em -0.06em rgb(10 10 11 / 0.45), inset 0 -0.04em 0 rgb(0 0 0 / 0.2); transform: rotate(4deg); } .ds-icon-lab svg { width: 64%; height: 64%; overflow: visible; } .ds-led { fill: var(--accent, #f5b000); } @media (prefers-reduced-motion: reduce) { .ds-icon { transition: none; } } .ds-nowrap { white-space: nowrap; }"
+      "css": ".ds-hl { margin: 0; max-width: 16ch; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); font-size: clamp(2.4rem, 0.9rem + 4.2vw, 4.75rem); font-weight: 650; line-height: 0.98; letter-spacing: -0.04em; color: var(--ink, #0a0a0b); } .ds-icon { display: inline-grid; place-items: center; width: 0.8em; height: 0.8em; margin-inline: 0.04em; border-radius: 0.2em; vertical-align: -0.04em; } .ds-icon-agro { background: var(--agro-green, #2f6b46); color: #fff; box-shadow: 0 0.1em 0.28em -0.06em rgb(10 10 11 / 0.45), inset 0 -0.04em 0 rgb(0 0 0 / 0.18); transform: rotate(-5deg); } .ds-icon-agro svg { width: 62%; height: 62%; } .ds-icon-lab { background: var(--stage-2, #18181b); color: var(--on-stage, #f4f4f5); box-shadow: 0 0.1em 0.28em -0.06em rgb(10 10 11 / 0.45), inset 0 -0.04em 0 rgb(0 0 0 / 0.2); transform: rotate(4deg); } .ds-icon-lab svg { width: 64%; height: 64%; overflow: visible; } .ds-led { fill: var(--accent, #f5b000); } .ds-nowrap { white-space: nowrap; }"
     },
     {
       "name": "Showcase",
       "kind": "custom",
       "refersTo": "showcase-name",
       "description": "Signature: both projects on the dark stage in two equal, top-aligned columns; each screenshot renders at its natural aspect as a self-contained crop (AgroApp hero column 660x412; Uptime Kuma counters over its log 726x432), and on phones each serves its own crop at natural aspect; each item is a link whose frame rises 4px on hover, named in large type with a gold arrow.",
-      "html": "<div class=\"ds-stage\"><ul class=\"ds-showcase\"><li><a class=\"ds-sc-link\" href=\"#\"><div class=\"ds-sc-frame\"><div class=\"ds-sc-shot\"></div></div><span class=\"ds-sc-meta\"><span class=\"ds-sc-name\">AgroApp</span><span class=\"ds-sc-cap\">Farm management, in production</span></span></a></li><li><a class=\"ds-sc-link\" href=\"#\"><div class=\"ds-sc-frame\"><div class=\"ds-sc-shot\"></div></div><span class=\"ds-sc-meta\"><span class=\"ds-sc-name\">Homelab</span><span class=\"ds-sc-cap\">Self-hosted services</span></span></a></li></ul></div>",
-      "css": ".ds-stage { padding: 1.5rem; background: radial-gradient(60rem 22rem at 50% -6rem, rgb(255 255 255 / 0.07), transparent 70%), var(--stage, #0a0a0b); } .ds-showcase { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: clamp(1.25rem, 3vw, 2.5rem); list-style: none; margin: 0; padding: 0; } .ds-sc-link { display: grid; gap: 0.9rem; color: var(--on-stage, #f4f4f5); text-decoration: none; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); } .ds-sc-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--stage-line, rgb(255 255 255 / 0.12)); background: var(--stage-2, #18181b); box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.85); transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-sc-link:hover .ds-sc-frame { transform: translateY(-4px); box-shadow: 0 34px 60px -24px rgb(0 0 0 / 0.95); } .ds-sc-link:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 7px; } .ds-sc-shot { width: 100%; aspect-ratio: 660 / 412; background: linear-gradient(180deg, #1f1f23, #18181b); } .ds-sc-meta { display: grid; gap: 0.15rem; } .ds-sc-name { font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.1; } .ds-sc-name::after { content: ' \\2192'; color: var(--accent, #f5b000); font-weight: 500; } .ds-sc-cap { color: var(--on-stage-2, #a1a1aa); font-size: 0.9375rem; } @media (max-width: 47.99rem) { .ds-showcase { grid-template-columns: 1fr; } } @media (prefers-reduced-motion: reduce) { .ds-sc-frame { transition: none; } }"
+      "html": "<div class=\"ds-stage\"><ul class=\"ds-showcase\"><li><a class=\"ds-sc-link\" href=\"#\"><div class=\"ds-sc-frame\"><div class=\"ds-sc-shot\"></div></div><span class=\"ds-sc-meta\"><span class=\"ds-sc-name\">AgroApp<svg class=\"ds-sc-arrow\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg></span><span class=\"ds-sc-cap\">Farm management, in production</span></span></a></li><li><a class=\"ds-sc-link\" href=\"#\"><div class=\"ds-sc-frame\"><div class=\"ds-sc-shot\"></div></div><span class=\"ds-sc-meta\"><span class=\"ds-sc-name\">Homelab<svg class=\"ds-sc-arrow\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg></span><span class=\"ds-sc-cap\">Self-hosted services</span></span></a></li></ul></div>",
+      "css": ".ds-stage { padding: 1.5rem; background: radial-gradient(60rem 22rem at 50% -6rem, rgb(255 255 255 / 0.07), transparent 70%), var(--stage, #0a0a0b); } .ds-showcase { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: clamp(1.25rem, 3vw, 2.5rem); list-style: none; margin: 0; padding: 0; } .ds-sc-link { display: grid; gap: 0.9rem; color: var(--on-stage, #f4f4f5); text-decoration: none; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); } .ds-sc-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--stage-line, rgb(255 255 255 / 0.12)); background: var(--stage-2, #18181b); box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.85); transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-sc-link:hover .ds-sc-frame { transform: translateY(-4px); box-shadow: 0 34px 60px -24px rgb(0 0 0 / 0.95); } .ds-sc-link:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 7px; } .ds-sc-shot { width: 100%; aspect-ratio: 660 / 412; background: linear-gradient(180deg, #1f1f23, #18181b); } .ds-sc-meta { display: grid; gap: 0.15rem; } .ds-sc-name { font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.1; } .ds-sc-name { display: inline-flex; align-items: center; gap: 0.35em; } .ds-sc-arrow { width: 0.8em; height: 0.8em; fill: none; stroke: var(--accent, #f5b000); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); } .ds-sc-link:hover .ds-sc-arrow { transform: translateX(4px); } .ds-sc-cap { color: var(--on-stage-2, #a1a1aa); font-size: 0.9375rem; } @media (max-width: 47.99rem) { .ds-showcase { grid-template-columns: 1fr; } } @media (prefers-reduced-motion: reduce) { .ds-sc-frame, .ds-sc-arrow { transition: none; } }"
     },
     {
       "name": "Browser Frame on Plate",
@@ -492,45 +509,45 @@
     },
     {
       "name": "Skills Rows",
-      "kind": "chip",
+      "kind": "custom",
       "refersTo": "skill-item",
-      "description": "The Skills & education / Habilidades y formación section on the tint band: each row a name with a proof line held at the top, then its items as white pills, rows ruled in Tint Rule; UTN Rosario is the education row, listing confirmed coursework. This is the page's single keyword list.",
-      "html": "<div class=\"ds-tint\"><dl class=\"ds-skills\"><div class=\"ds-row\"><dt><span class=\"ds-sk-name\">AgroApp</span><span class=\"ds-sk-proof\">Built a full-stack app with</span></dt><dd><ul class=\"ds-items\"><li>TypeScript</li><li>React</li><li>Node.js + Express</li></ul></dd></div><div class=\"ds-row\"><dt><span class=\"ds-sk-name\">UTN Rosario</span><span class=\"ds-sk-proof\">Information Systems Engineering · 4th year · graduating 2027</span></dt><dd><ul class=\"ds-items\"><li>Databases</li><li>Operating systems</li><li>Networks</li><li>Systems analysis &amp; design</li><li>Object-oriented programming</li></ul></dd></div></dl></div>",
-      "css": ".ds-tint { background: var(--tint, #ebebe9); padding: 1.5rem; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-skills { margin: 0; border-top: 1px solid var(--rule-tint, #d4d4d0); } .ds-row { display: grid; grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); gap: 0.5rem clamp(1.5rem, 4vw, 3rem); padding-block: 1.4rem; border-bottom: 1px solid var(--rule-tint, #d4d4d0); } .ds-row dt { display: grid; align-content: start; gap: 0.15rem; } .ds-sk-name { font-size: 1.375rem; font-weight: 640; letter-spacing: -0.02em; } .ds-sk-proof { color: var(--ink-2, #52525b); font-size: 0.9375rem; } .ds-row dd { margin: 0; align-self: center; } .ds-items { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; } .ds-items li { padding: 0.35rem 0.8rem; border-radius: 999px; background: var(--surface, #fff); font-size: 1.0625rem; font-weight: 500; } @media (max-width: 47.99rem) { .ds-row { grid-template-columns: 1fr; } }"
+      "description": "The Skills & education / Habilidades y formación section (nav: Skills / Habilidades) on the tint band: each row a name with a proof line held at the top, then its items as plain 1.1875rem weight-500 ink text separated by middle dots, rows ruled in Tint Rule; UTN Rosario is the education row, listing confirmed coursework. This is the page's single keyword list.",
+      "html": "<div class=\"ds-tint\"><dl class=\"ds-skills\"><div class=\"ds-row\"><dt><span class=\"ds-sk-name\">AgroApp</span><span class=\"ds-sk-proof\">Built a full-stack app with</span></dt><dd><ul class=\"ds-items\"><li>TypeScript</li><li>React</li><li>Node.js + Express</li></ul></dd></div><div class=\"ds-row\"><dt><span class=\"ds-sk-name\">UTN Rosario</span><span class=\"ds-sk-proof\">Information Systems Engineering, subjects so far</span></dt><dd><ul class=\"ds-items\"><li>Databases</li><li>Operating systems</li><li>Networks</li><li>Systems analysis &amp; design</li><li>Object-oriented programming</li></ul></dd></div></dl></div>",
+      "css": ".ds-tint { background: var(--tint, #ebebe9); padding: 1.5rem; font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-skills { margin: 0; border-top: 1px solid var(--rule-tint, #d4d4d0); } .ds-row { display: grid; grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); gap: 0.5rem clamp(1.5rem, 4vw, 3rem); padding-block: 1.4rem; border-bottom: 1px solid var(--rule-tint, #d4d4d0); } .ds-row dt { display: grid; align-content: start; gap: 0.15rem; } .ds-sk-name { font-size: 1.375rem; font-weight: 640; letter-spacing: -0.02em; } .ds-sk-proof { color: var(--ink-2, #52525b); font-size: 0.9375rem; } .ds-row dd { margin: 0; align-self: center; } .ds-items { display: flex; flex-wrap: wrap; gap: 0.35rem 0; list-style: none; margin: 0; padding: 0; font-size: 1.1875rem; font-weight: 500; letter-spacing: -0.01em; } .ds-items li:not(:last-child)::after { content: '·'; margin-inline: 0.6rem; color: var(--ink-2, #52525b); } @media (max-width: 47.99rem) { .ds-row { grid-template-columns: 1fr; } }"
     },
     {
       "name": "Services List",
-      "kind": "card",
-      "refersTo": "services-card",
-      "description": "Homelab services: running with a solid ink dot, next or planned with a dashed ring.",
-      "html": "<div class=\"ds-svc\"><p class=\"ds-svc-label\">Services <span>6 running</span></p><ul><li><span class=\"ds-sdot\"></span>Caddy</li><li><span class=\"ds-sdot\"></span>AgroApp</li><li class=\"ds-next\"><span class=\"ds-sdot\"></span>Backups<span class=\"ds-state\">next</span></li></ul></div>",
-      "css": ".ds-svc { padding: 1rem 1.1rem 1.1rem; border: 1px solid var(--line, #deded9); border-radius: 14px; background: var(--surface, #fff); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-svc-label { display: flex; justify-content: space-between; margin: 0 0 0.7rem; font-size: 0.9375rem; font-weight: 600; } .ds-svc-label span { color: var(--ink-2, #52525b); font-weight: 500; } .ds-svc ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.35rem 1.75rem; list-style: none; padding: 0; margin: 0; font-size: 0.9375rem; } .ds-svc li { display: flex; align-items: center; gap: 0.5rem; } .ds-sdot { flex: none; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--ink, #0a0a0b); } .ds-next { color: var(--ink-2, #52525b); } .ds-next .ds-sdot { background: transparent; border: 1.5px dashed var(--ink-2, #52525b); } .ds-state { margin-left: auto; font-size: 0.875rem; } @media (max-width: 26rem) { .ds-svc ul { grid-template-columns: 1fr; } }"
+      "kind": "custom",
+      "refersTo": "services",
+      "description": "Homelab services with no card: three rows under a hairline top rule (running count derived from the list / Next / Planned), each a 6.75rem label with a solid ink dot or dashed ring, then the names as one Slate Secondary line; rows stack below 22rem.",
+      "html": "<dl class=\"ds-svc\"><div class=\"ds-svc-row\"><dt><span class=\"ds-sdot\"></span>6 running</dt><dd>Pi-hole + Unbound, Caddy, Uptime Kuma, Portainer, Samba, AgroApp</dd></div><div class=\"ds-svc-row ds-later\"><dt><span class=\"ds-sdot\"></span>Next</dt><dd>Backups</dd></div><div class=\"ds-svc-row ds-later\"><dt><span class=\"ds-sdot\"></span>Planned</dt><dd>Gitea, WireGuard</dd></div></dl>",
+      "css": ".ds-svc { display: grid; gap: 0.45rem; margin: 0; padding-top: 1.1rem; border-top: 1px solid var(--line, #deded9); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); font-size: 0.9375rem; color: var(--ink, #0a0a0b); } .ds-svc-row { display: grid; grid-template-columns: 6.75rem minmax(0, 1fr); align-items: baseline; gap: 0.25rem 1rem; } .ds-svc-row dt { display: flex; align-items: center; align-self: start; min-height: 1.5em; gap: 0.5rem; font-weight: 600; white-space: nowrap; } .ds-svc-row dd { margin: 0; color: var(--ink-2, #52525b); } .ds-sdot { flex: none; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--ink, #0a0a0b); } .ds-later .ds-sdot { background: transparent; border: 1.5px dashed var(--ink-2, #52525b); } .ds-later dt { color: var(--ink-2, #52525b); font-weight: 500; } @media (max-width: 22rem) { .ds-svc-row { grid-template-columns: 1fr; } }"
     },
     {
       "name": "Outage Card",
       "kind": "card",
       "refersTo": "outage-card",
-      "description": "One real outage, start to finish, from the Pi-hole write-up: a surface card with four ruled steps (Symptom, Ruled out, Cause, Fix) as 6.5rem term / flexible detail rows that stack under 26rem.",
-      "html": "<div class=\"ds-outage\"><h4 class=\"ds-o-title\">One outage, start to finish</h4><dl class=\"ds-o-steps\"><div class=\"ds-o-step\"><dt>Symptom</dt><dd>Every device on the home network timed out on DNS.</dd></div><div class=\"ds-o-step\"><dt>Ruled out</dt><dd>A manual DNS setting on the client, the router’s client isolation and Docker’s NAT rules.</dd></div><div class=\"ds-o-step\"><dt>Cause</dt><dd>Pi-hole starts with listeningMode LOCAL, which silently drops LAN queries NAT-ed through Docker.</dd></div><div class=\"ds-o-step\"><dt>Fix</dt><dd>Switched to listeningMode ALL, pinned in the compose file.</dd></div></dl></div>",
-      "css": ".ds-outage { padding: 1.1rem 1.1rem 0.4rem; border: 1px solid var(--line, #deded9); border-radius: 14px; background: var(--surface, #fff); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-o-title { margin: 0; font-size: 1.0625rem; font-weight: 640; letter-spacing: -0.01em; } .ds-o-steps { margin: 0.6rem 0 0; } .ds-o-step { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.25rem 1rem; padding-block: 0.65rem; border-top: 1px solid var(--line, #deded9); } .ds-o-step dt { font-size: 0.9375rem; font-weight: 600; } .ds-o-step dd { margin: 0; color: var(--ink-2, #52525b); font-size: 0.9375rem; line-height: 1.5; } @media (max-width: 26rem) { .ds-o-step { grid-template-columns: 1fr; } }"
+      "description": "One real outage from the Pi-hole write-up as a closed disclosure card: title, one plain-language summary line, and an underlined \"Show the four steps\" toggle with a chevron; opened, four ruled steps (Symptom, Ruled out, Cause, Fix) as 6.5rem term / flexible detail rows that stack under 26rem.",
+      "html": "<details class=\"ds-outage\"><summary class=\"ds-o-sum\"><span class=\"ds-o-title\">One outage, start to finish</span><span class=\"ds-o-line\">DNS went down for every device in the house. Pi-hole was quietly ignoring normal home-network traffic; one setting fixed it, and it’s now pinned in the config.</span><span class=\"ds-o-more\">Show the four steps<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M4 6l4 4 4-4\"/></svg></span></summary><dl class=\"ds-o-steps\"><div class=\"ds-o-step\"><dt>Symptom</dt><dd>Every device on the home network timed out on DNS.</dd></div><div class=\"ds-o-step\"><dt>Ruled out</dt><dd>A manual DNS setting on the client, the router’s client isolation and Docker’s NAT rules.</dd></div><div class=\"ds-o-step\"><dt>Cause</dt><dd>Pi-hole starts with listeningMode LOCAL, which silently drops LAN queries NAT-ed through Docker.</dd></div><div class=\"ds-o-step\"><dt>Fix</dt><dd>Switched to listeningMode ALL, pinned in the compose file.</dd></div></dl></details>",
+      "css": ".ds-outage { border: 1px solid var(--line, #deded9); border-radius: 14px; background: var(--surface, #fff); font-family: var(--sans, 'Geist Variable', system-ui, sans-serif); color: var(--ink, #0a0a0b); } .ds-o-sum { display: grid; gap: 0.35rem; padding: 1rem 1.1rem; cursor: pointer; list-style: none; } .ds-o-sum::-webkit-details-marker { display: none; } .ds-o-sum:focus-visible { outline: 2px solid var(--ink, #0a0a0b); outline-offset: -2px; border-radius: 14px; } .ds-o-title { font-size: 1.0625rem; font-weight: 640; letter-spacing: -0.01em; } .ds-o-line { color: var(--ink-2, #52525b); font-size: 0.9375rem; line-height: 1.5; } .ds-o-more { display: inline-flex; align-items: center; justify-self: start; gap: 0.35rem; min-height: 2rem; margin-top: 0.15rem; font-size: 0.9375rem; font-weight: 560; text-decoration: underline; text-decoration-color: var(--line, #deded9); text-decoration-thickness: 1.5px; text-underline-offset: 0.3em; transition: text-decoration-color 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-o-sum:hover .ds-o-more { text-decoration-color: var(--accent, #f5b000); text-decoration-thickness: 3px; } .ds-o-more svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-outage[open] .ds-o-more svg { transform: rotate(180deg); } .ds-o-steps { margin: 0; padding: 0 1.1rem 0.4rem; } .ds-o-step { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.25rem 1rem; padding-block: 0.65rem; border-top: 1px solid var(--line, #deded9); } .ds-o-step dt { font-size: 0.9375rem; font-weight: 600; } .ds-o-step dd { margin: 0; color: var(--ink-2, #52525b); font-size: 0.9375rem; line-height: 1.5; } @media (max-width: 26rem) { .ds-o-step { grid-template-columns: 1fr; } }"
     }
   ],
   "narrative": {
     "northStar": "The Launch Page",
-    "overview": "The site is a product launch where the product is Tiziano's work. A light, cool near-white page carries near-black ink and a large, tight first-person display, set beside a real photo of Tiziano and followed by a short identity block: his name and age, his role, an availability pill and one line of practical facts (graduation year, work mode, English level). Wherever a real screenshot appears, the page drops into a near-black stage band or plate so the screen glows like a product shot. One warm sun-gold (the Sol de Mayo) does all the acting: it marks what can be pressed, what is selected and what is live, and nothing else. Gold with ink text, rather than a cool electric blue, keeps the page from reading like a generic tech-company launch.\n\nDensity is launch-page density: big headings, short scannable rows, generous section padding, and real screens and a real photo as the imagery. Structure comes from bands (light page, grey tint band, dark stage and contact bands) rather than from boxes. The dark stage under the hero shows both projects at once as a showcase, each screen a door into its project article. Motion is sparse and deliberate: a small lift on the showcase frames on hover, a single reveal on each of the two project articles (skipped when the page opens on a hash), smooth scrolling only when an in-page anchor is clicked, and a short cross-page view transition on the language switch.\n\nThe world refuses the manual or gimmick concept, long text blocks, grids of identical cards, and neon hacker styling.",
+    "overview": "The site is a product launch where the product is Tiziano's work. A light, cool near-white page carries near-black ink and a large, tight first-person display, set beside a real photo of Tiziano and followed by a short identity block: Tiziano's name and age, the role, an availability line and one line of practical facts (graduation year, work mode, English level). Wherever a real screenshot appears, the page drops into a near-black stage band or plate so the screen glows like a product shot. One warm sun-gold (the Sol de Mayo) does all the acting: it marks what can be pressed, what is selected and what is live, and nothing else. Gold with ink text, rather than a cool electric blue, keeps the page from reading like a generic tech-company launch.\n\nDensity is launch-page density: big headings, short scannable rows, generous section padding, and real screens and a real photo as the imagery. Structure comes from bands (light page, grey tint band, dark stage and contact bands) rather than from boxes. The dark stage under the hero shows both projects at once as a showcase, each screen a door into its project article. Motion is sparse and deliberate: a small lift on the showcase frames on hover, a single reveal on each of the two project articles (skipped when the page opens on a hash), smooth scrolling only when an in-page anchor is clicked, and a short cross-page view transition on the language switch. Shared as a link, the page previews as a card built from the same type, palette and photo.\n\nThe world refuses the manual or gimmick concept, long text blocks, grids of identical cards, and neon hacker styling.",
     "keyCharacteristics": [
       "Light cool page, near-black ink, dark stages only where screens are shown.",
       "One sun-gold accent with ink text, restricted to actions, selection, link underlines, the showcase arrows, live-status marks and the copied state of the email copy button.",
       "Geist Variable for everything, with a large, tight, negative-tracked display; Geist Mono only for small technical metadata in the browser-frame bar (frame labels and frame tags).",
-      "Real screenshots in a softly rounded browser frame with a deep, soft drop shadow; a real square portrait beside the hero headline that becomes a small circular avatar on phones.",
+      "Real screenshots in a softly rounded browser frame with a deep, soft drop shadow; a real 4:5 portrait beside the hero headline that becomes a small circular avatar on phones.",
       "Two tilted, decorative app-icon marks set inline in the headline.",
-      "Pill-shaped controls, chips and status; rounded rectangles for frames, plates, cards and the portrait.",
+      "Pill-shaped controls; plain text for status and keyword lists; rounded rectangles for frames, plates, the outage card and the portrait.",
       "Luminance-only glows on dark bands, never tinted."
     ],
     "rules": [
       {
         "name": "The One Gold Rule",
-        "body": "Gold appears only on primary buttons, text selection, the text-link hover underline, the contact email underline, the showcase arrows, the hero availability dot and its soft ring, the nav mark dot, the Homelab status LEDs, the dot leading each browser-frame tag and the border of an email copy button that has just copied. It is a fill, an underline or a small mark, never the color of words, and anything set on a gold fill is ink. Bullets, service dots, pills and glows are ink or neutral.",
+        "body": "Gold appears only on primary buttons, text selection, the hover underline of text links and the outage toggle, the contact email underline, the showcase arrows, the hero availability dot and its soft ring, the nav mark dot, the Homelab status LEDs, the dot leading each browser-frame tag and the border of an email copy button that has just copied. It is a fill, an underline or a small mark, never the color of words, and anything set on a gold fill is ink. Bullets, service dots, pills and glows are ink or neutral. Filled gold is kept to three buttons on the whole page: the nav Contact, the hero \"See projects\" and AgroApp's \"Open agroapp.dev\".",
         "section": "colors"
       },
       {
@@ -565,18 +582,18 @@
       },
       {
         "name": "The Proof Is Primary Rule",
-        "body": "In each project the single gold button opens the evidence that the work is real and running; source code and API docs are always text links, grouped on their own row below it.",
+        "body": "A project gets a gold button only when there is something running to open, and then exactly one, opening it (AgroApp's live app). A project without one (Homelab) has no gold button. Source code, API docs and write-ups are always text links, grouped on their own row.",
         "section": "components"
       }
     ],
     "dos": [
       "Do show every real screenshot inside the browser frame, on a Stage Black band or plate, and serve a legible crop on phones where the full screen would be too small to read.",
-      "Do keep Sol de Mayo Gold to primary buttons, selection, the link hover underline, the contact email underline, the showcase arrows, the availability dot, the nav mark dot, the Homelab status LEDs, the frame-tag dots and the copied-state border of the email copy button.",
+      "Do keep Sol de Mayo Gold to primary buttons, selection, the link and outage-toggle hover underline, the contact email underline, the showcase arrows, the availability dot, the nav mark dot, the Homelab status LEDs, the frame-tag dots and the copied-state border of the email copy button.",
       "Do set ink text on every gold fill, and use gold only as a fill, an underline or a small mark.",
-      "Do use pills for controls, chips and status, and 14px or 22px rounded rectangles for frames, cards, plates and the portrait.",
+      "Do use pills for controls, plain text for status and keyword lists, and 14px or 22px rounded rectangles for frames, cards, plates and the portrait.",
       "Do set headings in Geist Variable at weight 640 to 650 with negative tracking and tight line-height.",
       "Do keep rows short and scannable: points, ruled skill rows, service lists.",
-      "Do make each project's one gold button open the proof (the running app or a real write-up), and keep source code and API docs as grouped text links on their own row below it.",
+      "Do give a project a gold button only when it has something running to open, and then just one; keep source code, API docs and write-ups as grouped text links on their own row.",
       "Do give every small control at least a 2.75rem (hit) target.",
       "Do make every motion safe under reduced motion, and use the expo ease-out (cubic-bezier(0.16, 1, 0.3, 1)) for transitions.",
       "Do scroll smoothly only on in-page anchor clicks (instant under reduced motion); arrival on a hash is never animated and skips the project reveals.",
