@@ -38,3 +38,9 @@ app/plugins/impeccable-live.client.ts
 src/plugins/impeccable-live.client.ts
 # impeccable-live-ignore-end
 .impeccable/questions/
+
+# Working notes and tool config: kept locally, not published in the repo
+.impeccable/
+.claude/
+PRODUCT.md
+DESIGN.md
