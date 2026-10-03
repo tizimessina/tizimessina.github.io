@@ -11,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = content[lang];
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const site = Astro.site ?? new URL('https://tizimessina.github.io');
+const site = Astro.site ?? new URL('https://tizimessina.com.ar');
 const hrefEn = new URL(base, site).href;
 const hrefEs = new URL(`${base}es/`, site).href;
 const canonical = lang === 'en' ? hrefEn : hrefEs;
